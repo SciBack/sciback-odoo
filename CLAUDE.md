@@ -60,8 +60,11 @@ Cada despliegue instala SOLO los módulos de su nivel.
 
 - ✅ Fase 0 — Entorno, estructura EBR, datos de prueba
 - ✅ Fase 2 — Facturación SUNAT vía NubeFact (boletas BBB1 emitidas en sandbox; PDF/XML/QR OK)
-- 🔄 Fase 1 — Datos reales Agua Viva (cliente alfa)
-- ⏳ Fase 3 SIAGIE · Fase 4 CNEB · Fase 5 Pagos · Fase 6 Portal padres · Fase 7 QA · Fase 8 Go-live
+- 🔄 Fase 4 CNEB — módulo `sciback_cneb_evaluation` creado e instalable (6 modelos, escala AD/A/B/C, 23 áreas). Falta: boletín PDF, wizard masivo, validar DNI y abreviaturas SIAGIE con plantilla real.
+- ⏳ Fase 1 — Datos reales del cliente piloto (Agua Viva DESCARTADO 2026-05-31; nuevo colegio por definir, datos ~2026-06-01/02)
+- ⏳ Fase 3 SIAGIE (en pausa; agente `siagie-expert` y docs listos, falta plantilla real) · Fase 5 Pagos · Fase 6 Portal padres · Fase 7 QA · Fase 8 Go-live
+
+> Multi-tenant validado en lab (dbfilter+nginx por subdominio); `deploy/` reorientado a modelo POD. Ver `deploy/README-multitenant.md`.
 
 ## Hallazgos críticos (ya resueltos — ver docs/12-lab-hallazgos.md)
 
