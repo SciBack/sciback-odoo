@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_cneb_area_final_grade_tree" model="ir.ui.view">
+        <field name="name">cneb.area.final.grade.tree</field>
+        <field name="model">cneb.area.final.grade</field>
+        <field name="arch" type="xml">
+            <tree string="Notas finales por área (NF)" editable="bottom">
+                <field name="academic_year_id"/>
+                <field name="batch_id"/>
+                <field name="student_id"/>
+                <field name="area_id"/>
+                <field name="grading_type" readonly="1" optional="hide"/>
+                <field name="final_grade" widget="badge"
+                       decoration-success="final_grade == 'AD'"
+                       decoration-info="final_grade == 'A'"
+                       decoration-warning="final_grade == 'B'"
+                       decoration-danger="final_grade == 'C'"
+                       invisible="grading_type == 'vigesimal'"/>
+                <field name="final_grade_numeric"
+                       invisible="grading_type != 'vigesimal'"/>
+                <field name="siagie_situation" readonly="1" optional="show"/>
+                <field name="export_state" widget="badge"
+                       decoration-muted="export_state == 'draft'"
+                       decoration-success="export_state == 'confirmed'"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_cneb_area_final_grade_form" model="ir.ui.view">
+        <field name="name">cneb.area.final.grade.form</field>
+        <field name="model">cneb.area.final.grade</field>
+        <field name="arch" type="xml">
+            <form string="Nota final por área">
+                <header>
+                    <button name="action_mark_generated" type="object"
+                            string="Marcar generado" invisible="export_state != 'draft'"/>
+                    <button name="action_mark_uploaded" type="object"
+                            string="Marcar cargado" invisible="export_state != 'generated'"/>
+                    <button name="action_mark_confirmed" type="object"
+                            string="Marcar confirmado" invisible="export_state != 'uploaded'"/>
+                    <button name="action_reset_draft" type="object"
+                            string="Volver a borrador" invisible="export_state == 'draft'"/>
+                    <field name="export_state" widget="statusbar"
+                           statusbar_visible="draft,generated,uploaded,confirmed"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="student_id"/>
+                            <field name="area_id"/>
+                            <field name="grading_type" readonly="1"/>
+                            <field name="level" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="academic_year_id"/>
+                            <field name="batch_id"/>
+                            <field name="final_grade"
+                                   invisible="grading_type == 'vigesimal'"/>
+                            <field name="final_grade_numeric"
+                                   invisible="grading_type != 'vigesimal'"/>
+                            <field name="siagie_situation" readonly="1"/>
+                        </group>
+                    </group>
+                    <group string="Conclusión descriptiva final">
+                        <field name="final_descriptive_conclusion" nolabel="1"/>
+                    </group>
+                    <group string="SIAGIE">
+                        <field name="siagie_observation"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_cneb_area_final_grade_search" model="ir.ui.view">
+        <field name="name">cneb.area.final.grade.search</field>
+        <field name="model">cneb.area.final.grade</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="student_id"/>
+                <field name="area_id"/>
+                <field name="batch_id"/>
+                <field name="academic_year_id"/>
+                <group expand="0" string="Agrupar por">
+                    <filter name="group_year" string="Año" context="{'group_by':'academic_year_id'}"/>
+                    <filter name="group_batch" string="Grado/Sección" context="{'group_by':'batch_id'}"/>
+                    <filter name="group_area" string="Área" context="{'group_by':'area_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_cneb_area_final_grade" model="ir.actions.act_window">
+        <field name="name">Notas finales por área</field>
+        <field name="res_model">cneb.area.final.grade</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_cneb_area_final_grade_search"/>
+    </record>
+
+</odoo>

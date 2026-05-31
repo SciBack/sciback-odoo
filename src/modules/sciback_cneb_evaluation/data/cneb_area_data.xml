@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+        Set inicial de áreas curriculares CNEB por nivel.
+        IMPORTANTE: las abreviaturas SIAGIE (siagie_abbr) son PROVISIONALES.
+        Deben validarse/ajustarse contra la plantilla SIAGIE real antes de
+        exportar. noupdate="1" para no pisar ediciones manuales del colegio.
+    -->
+    <data noupdate="1">
+
+        <!-- ============================ INICIAL ============================ -->
+        <!-- Inicial: solo conclusiones descriptivas (sin literal). El literal
+             queda vacío y se exige conclusión descriptiva siempre. -->
+        <record id="cneb_area_inicial_personal_social" model="cneb.area">
+            <field name="name">Personal Social</field>
+            <field name="code">INI_PS</field>
+            <field name="siagie_abbr">PPSS</field>
+            <field name="level">inicial</field>
+            <field name="grading_type">literal</field>
+        </record>
+        <record id="cneb_area_inicial_psicomotriz" model="cneb.area">
+            <field name="name">Psicomotriz</field>
+            <field name="code">INI_PSM</field>
+            <field name="siagie_abbr">PSMT</field>
+            <field name="level">inicial</field>
+            <field name="grading_type">literal</field>
+        </record>
+        <record id="cneb_area_inicial_comunicacion" model="cneb.area">
+            <field name="name">Comunicación</field>
+            <field name="code">INI_COM</field>
+            <field name="siagie_abbr">COMU</field>
+            <field name="level">inicial</field>
+            <field name="grading_type">literal</field>
+        </record>
+        <record id="cneb_area_inicial_matematica" model="cneb.area">
+            <field name="name">Matemática</field>
+            <field name="code">INI_MAT</field>
+            <field name="siagie_abbr">MATE</field>
+            <field name="level">inicial</field>
+            <field name="grading_type">literal</field>
+        </record>
+        <record id="cneb_area_inicial_ciencia_tecnologia" model="cneb.area">
+            <field name="name">Ciencia y Tecnología</field>
+            <field name="code">INI_CYT</field>
+            <field name="siagie_abbr">CCAA</field>
+            <field name="level">inicial</field>
+            <field name="grading_type">literal</field>
+        </record>
+
+        <!-- ============================ PRIMARIA =========================== -->
+        <record id="cneb_area_prim_comunicacion" model="cneb.area">
+            <field name="name">Comunicación</field>
+            <field name="code">PRI_COM</field>
+            <field name="siagie_abbr">COMU_LM</field>
+            <field name="level">primaria</field>
+            <field name="grading_type">literal</field>
+        </record>
+        <record id="cneb_area_prim_matematica" model="cneb.area">
+            <field name="name">Matemática</field>
+            <field name="code">PRI_MAT</field>
+            <field name="siagie_abbr">MATE</field>
+            <field name="level">primaria</field>
+            <field name="grading_type">literal</field>
+        </record>
+        <record id="cneb_area_prim_personal_social" model="cneb.area">
+            <field name="name">Personal Social</field>
+            <field name="code">PRI_PS</field>
+            <field name="siagie_abbr">PPSS</field>
+            <field name="level">primaria</field>
+            <field name="grading_type">literal</field>
+        </record>
+        <record id="cneb_area_prim_ciencia_tecnologia" model="cneb.area">
+            <field name="name">Ciencia y Tecnología</field>
+            <field name="code">PRI_CYT</field>
+            <field name="siagie_abbr">CCAA</field>
+            <field name="level">primaria</field>
+            <field name="grading_type">literal</field>
+        </record>
+        <record id="cneb_area_prim_arte_cultura" model="cneb.area">
+            <field name="name">Arte y Cultura</field>
+            <field name="code">PRI_ART</field>
+            <field name="siagie_abbr">ARTE</field>
+            <field name="level">primaria</field>
+            <field name="grading_type">literal</field>
+        </record>
+        <record id="cneb_area_prim_educacion_fisica" model="cneb.area">
+            <field name="name">Educación Física</field>
+            <field name="code">PRI_EF</field>
+            <field name="siagie_abbr">EDFI</field>
+            <field name="level">primaria</field>
+            <field name="grading_type">literal</field>
+        </record>
+        <record id="cneb_area_prim_educacion_religiosa" model="cneb.area">
+            <field name="name">Educación Religiosa</field>
+            <field name="code">PRI_REL</field>
+            <field name="siagie_abbr">EDRE</field>
+            <field name="level">primaria</field>
+            <field name="grading_type">literal</field>
+        </record>
+        <record id="cneb_area_prim_ingles" model="cneb.area">
+            <field name="name">Inglés</field>
+            <field name="code">PRI_ING</field>
+            <field name="siagie_abbr">INGL</field>
+            <field name="level">primaria</field>
+            <field name="grading_type">literal</field>
+        </record>
+
+        <!-- =========================== SECUNDARIA ========================== -->
+        <record id="cneb_area_sec_comunicacion" model="cneb.area">
+            <field name="name">Comunicación</field>
+            <field name="code">SEC_COM</field>
+            <field name="siagie_abbr">COMU_LM</field>
+            <field name="level">secundaria</field>
+            <field name="grading_type">literal</field>
+        </record>
+        <record id="cneb_area_sec_matematica" model="cneb.area">
+            <field name="name">Matemática</field>
+            <field name="code">SEC_MAT</field>
+            <field name="siagie_abbr">MATE</field>
+            <field name="level">secundaria</field>
+            <field name="grading_type">literal</field>
+        </record>
+        <record id="cneb_area_sec_ciencias_sociales" model="cneb.area">
+            <field name="name">Ciencias Sociales</field>
+            <field name="code">SEC_CCSS</field>
+            <field name="siagie_abbr">CCSS</field>
+            <field name="level">secundaria</field>
+            <field name="grading_type">literal</field>
+        </record>
+        <record id="cneb_area_sec_dpcc" model="cneb.area">
+            <field name="name">Desarrollo Personal, Ciudadanía y Cívica</field>
+            <field name="code">SEC_DPCC</field>
+            <field name="siagie_abbr">DPCC</field>
+            <field name="level">secundaria</field>
+            <field name="grading_type">literal</field>
+        </record>
+        <record id="cneb_area_sec_ciencia_tecnologia" model="cneb.area">
+            <field name="name">Ciencia y Tecnología</field>
+            <field name="code">SEC_CYT</field>
+            <field name="siagie_abbr">CTA</field>
+            <field name="level">secundaria</field>
+            <field name="grading_type">literal</field>
+        </record>
+        <record id="cneb_area_sec_ept" model="cneb.area">
+            <field name="name">Educación para el Trabajo</field>
+            <field name="code">SEC_EPT</field>
+            <field name="siagie_abbr">EPT</field>
+            <field name="level">secundaria</field>
+            <field name="grading_type">literal</field>
+        </record>
+        <record id="cneb_area_sec_arte_cultura" model="cneb.area">
+            <field name="name">Arte y Cultura</field>
+            <field name="code">SEC_ART</field>
+            <field name="siagie_abbr">ARTE</field>
+            <field name="level">secundaria</field>
+            <field name="grading_type">literal</field>
+        </record>
+        <record id="cneb_area_sec_educacion_fisica" model="cneb.area">
+            <field name="name">Educación Física</field>
+            <field name="code">SEC_EF</field>
+            <field name="siagie_abbr">EDFI</field>
+            <field name="level">secundaria</field>
+            <field name="grading_type">literal</field>
+        </record>
+        <record id="cneb_area_sec_educacion_religiosa" model="cneb.area">
+            <field name="name">Educación Religiosa</field>
+            <field name="code">SEC_REL</field>
+            <field name="siagie_abbr">EDRE</field>
+            <field name="level">secundaria</field>
+            <field name="grading_type">literal</field>
+        </record>
+        <record id="cneb_area_sec_ingles" model="cneb.area">
+            <field name="name">Inglés</field>
+            <field name="code">SEC_ING</field>
+            <field name="siagie_abbr">INGL</field>
+            <field name="level">secundaria</field>
+            <field name="grading_type">literal</field>
+        </record>
+
+    </data>
+</odoo>

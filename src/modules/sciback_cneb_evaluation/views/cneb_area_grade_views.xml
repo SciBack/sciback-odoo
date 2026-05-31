@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_cneb_area_grade_tree" model="ir.ui.view">
+        <field name="name">cneb.area.grade.tree</field>
+        <field name="model">cneb.area.grade</field>
+        <field name="arch" type="xml">
+            <tree string="Calificativos por área (SIAGIE)" editable="bottom">
+                <field name="period_id"/>
+                <field name="batch_id"/>
+                <field name="student_id"/>
+                <field name="student_code" readonly="1" optional="show"/>
+                <field name="area_id"/>
+                <field name="grading_type" readonly="1" optional="hide"/>
+                <field name="suggested_grade" readonly="1" optional="show"/>
+                <field name="grade" widget="badge"
+                       decoration-success="grade == 'AD'"
+                       decoration-info="grade == 'A'"
+                       decoration-warning="grade == 'B'"
+                       decoration-danger="grade == 'C'"
+                       invisible="grading_type == 'vigesimal'"/>
+                <field name="grade_numeric"
+                       invisible="grading_type != 'vigesimal'"/>
+                <field name="descriptive_conclusion" optional="show"/>
+                <field name="export_state" widget="badge"
+                       decoration-muted="export_state == 'draft'"
+                       decoration-info="export_state == 'generated'"
+                       decoration-warning="export_state == 'uploaded'"
+                       decoration-success="export_state == 'confirmed'"/>
+                <field name="student_code_warning" column_invisible="1"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_cneb_area_grade_form" model="ir.ui.view">
+        <field name="name">cneb.area.grade.form</field>
+        <field name="model">cneb.area.grade</field>
+        <field name="arch" type="xml">
+            <form string="Calificativo por área">
+                <header>
+                    <button name="action_apply_suggestion" type="object"
+                            string="Aplicar sugerencia"
+                            invisible="grading_type == 'vigesimal' or not suggested_grade"/>
+                    <button name="action_mark_generated" type="object"
+                            string="Marcar generado" invisible="export_state != 'draft'"/>
+                    <button name="action_mark_uploaded" type="object"
+                            string="Marcar cargado" invisible="export_state != 'generated'"/>
+                    <button name="action_mark_confirmed" type="object"
+                            string="Marcar confirmado" invisible="export_state != 'uploaded'"/>
+                    <button name="action_reset_draft" type="object"
+                            string="Volver a borrador" invisible="export_state == 'draft'"/>
+                    <field name="export_state" widget="statusbar"
+                           statusbar_visible="draft,generated,uploaded,confirmed"/>
+                </header>
+                <sheet>
+                    <field name="student_code_warning" invisible="1"/>
+                    <div class="alert alert-warning" role="alert"
+                         invisible="not student_code_warning">
+                        El estudiante no tiene DNI registrado (8 dígitos). El código
+                        SIAGIE (14 dígitos) no puede generarse. Complete el DNI antes
+                        de exportar.
+                    </div>
+                    <group>
+                        <group>
+                            <field name="student_id"/>
+                            <field name="student_code" readonly="1"/>
+                            <field name="area_id"/>
+                            <field name="grading_type" readonly="1"/>
+                            <field name="level" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="period_id"/>
+                            <field name="batch_id"/>
+                            <field name="academic_year_id"/>
+                            <field name="suggested_grade" readonly="1"/>
+                            <field name="grade"
+                                   invisible="grading_type == 'vigesimal'"/>
+                            <field name="grade_numeric"
+                                   invisible="grading_type != 'vigesimal'"/>
+                        </group>
+                    </group>
+                    <group string="Conclusión descriptiva">
+                        <field name="descriptive_conclusion" nolabel="1"/>
+                    </group>
+                    <group string="SIAGIE">
+                        <field name="siagie_observation"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_cneb_area_grade_search" model="ir.ui.view">
+        <field name="name">cneb.area.grade.search</field>
+        <field name="model">cneb.area.grade</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="student_id"/>
+                <field name="area_id"/>
+                <field name="period_id"/>
+                <field name="batch_id"/>
+                <field name="academic_year_id"/>
+                <filter name="draft" string="Borrador" domain="[('export_state','=','draft')]"/>
+                <filter name="confirmed" string="Confirmado" domain="[('export_state','=','confirmed')]"/>
+                <group expand="0" string="Agrupar por">
+                    <filter name="group_period" string="Periodo" context="{'group_by':'period_id'}"/>
+                    <filter name="group_batch" string="Grado/Sección" context="{'group_by':'batch_id'}"/>
+                    <filter name="group_area" string="Área" context="{'group_by':'area_id'}"/>
+                    <filter name="group_export" string="Estado exportación" context="{'group_by':'export_state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_cneb_area_grade" model="ir.actions.act_window">
+        <field name="name">Calificativos por área</field>
+        <field name="res_model">cneb.area.grade</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_cneb_area_grade_search"/>
+    </record>
+
+</odoo>

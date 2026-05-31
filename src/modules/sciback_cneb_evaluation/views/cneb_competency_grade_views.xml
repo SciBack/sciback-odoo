@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_cneb_competency_grade_tree" model="ir.ui.view">
+        <field name="name">cneb.competency.grade.tree</field>
+        <field name="model">cneb.competency.grade</field>
+        <field name="arch" type="xml">
+            <tree string="Logros por competencia" editable="bottom">
+                <field name="period_id"/>
+                <field name="student_id"/>
+                <field name="area_id" readonly="1"/>
+                <field name="competency_id"/>
+                <field name="level" readonly="1" optional="hide"/>
+                <field name="grade" widget="badge"
+                       decoration-success="grade == 'AD'"
+                       decoration-info="grade == 'A'"
+                       decoration-warning="grade == 'B'"
+                       decoration-danger="grade == 'C'"/>
+                <field name="descriptive_conclusion"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_cneb_competency_grade_form" model="ir.ui.view">
+        <field name="name">cneb.competency.grade.form</field>
+        <field name="model">cneb.competency.grade</field>
+        <field name="arch" type="xml">
+            <form string="Logro por competencia">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="student_id"/>
+                            <field name="competency_id"/>
+                            <field name="area_id" readonly="1"/>
+                            <field name="level" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="period_id"/>
+                            <field name="grade"/>
+                        </group>
+                    </group>
+                    <group string="Conclusión descriptiva">
+                        <field name="descriptive_conclusion" nolabel="1"
+                               placeholder="Obligatoria en Inicial siempre, y en Primaria/Secundaria cuando el logro es C o AD."/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_cneb_competency_grade_search" model="ir.ui.view">
+        <field name="name">cneb.competency.grade.search</field>
+        <field name="model">cneb.competency.grade</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="student_id"/>
+                <field name="competency_id"/>
+                <field name="area_id"/>
+                <field name="period_id"/>
+                <filter name="sin_evaluar" string="Sin evaluar" domain="[('grade','=',False)]"/>
+                <group expand="0" string="Agrupar por">
+                    <filter name="group_period" string="Periodo" context="{'group_by':'period_id'}"/>
+                    <filter name="group_area" string="Área" context="{'group_by':'area_id'}"/>
+                    <filter name="group_student" string="Estudiante" context="{'group_by':'student_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_cneb_competency_grade" model="ir.actions.act_window">
+        <field name="name">Logros por competencia</field>
+        <field name="res_model">cneb.competency.grade</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_cneb_competency_grade_search"/>
+    </record>
+
+</odoo>

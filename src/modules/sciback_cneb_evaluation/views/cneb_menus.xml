@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Menú raíz CNEB -->
+    <menuitem id="menu_cneb_root"
+              name="CNEB"
+              sequence="80"/>
+
+    <!-- Evaluación -->
+    <menuitem id="menu_cneb_evaluation"
+              name="Evaluación"
+              parent="menu_cneb_root"
+              sequence="10"/>
+
+    <menuitem id="menu_cneb_area_grade"
+              name="Calificativos por área"
+              parent="menu_cneb_evaluation"
+              action="action_cneb_area_grade"
+              sequence="10"/>
+
+    <menuitem id="menu_cneb_competency_grade"
+              name="Logros por competencia"
+              parent="menu_cneb_evaluation"
+              action="action_cneb_competency_grade"
+              sequence="20"/>
+
+    <menuitem id="menu_cneb_area_final_grade"
+              name="Notas finales por área"
+              parent="menu_cneb_evaluation"
+              action="action_cneb_area_final_grade"
+              sequence="30"/>
+
+    <!-- Configuración -->
+    <menuitem id="menu_cneb_config"
+              name="Configuración"
+              parent="menu_cneb_root"
+              sequence="90"/>
+
+    <menuitem id="menu_cneb_periods"
+              name="Periodos de evaluación"
+              parent="menu_cneb_config"
+              action="action_cneb_evaluation_period"
+              sequence="10"/>
+
+    <menuitem id="menu_cneb_areas"
+              name="Áreas curriculares"
+              parent="menu_cneb_config"
+              action="action_cneb_area"
+              sequence="20"/>
+
+    <menuitem id="menu_cneb_competencies"
+              name="Competencias"
+              parent="menu_cneb_config"
+              action="action_cneb_competency"
+              sequence="30"/>
+
+</odoo>

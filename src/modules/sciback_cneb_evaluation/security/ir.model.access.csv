@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_cneb_area_user,cneb.area.user,model_cneb_area,base.group_user,1,1,1,1
+access_cneb_competency_user,cneb.competency.user,model_cneb_competency,base.group_user,1,1,1,1
+access_cneb_evaluation_period_user,cneb.evaluation.period.user,model_cneb_evaluation_period,base.group_user,1,1,1,1
+access_cneb_competency_grade_user,cneb.competency.grade.user,model_cneb_competency_grade,base.group_user,1,1,1,1
+access_cneb_area_grade_user,cneb.area.grade.user,model_cneb_area_grade,base.group_user,1,1,1,1
+access_cneb_area_final_grade_user,cneb.area.final.grade.user,model_cneb_area_final_grade,base.group_user,1,1,1,1

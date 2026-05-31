@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_cneb_area_tree" model="ir.ui.view">
+        <field name="name">cneb.area.tree</field>
+        <field name="model">cneb.area</field>
+        <field name="arch" type="xml">
+            <tree string="Áreas curriculares CNEB">
+                <field name="level"/>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="siagie_abbr"/>
+                <field name="grading_type"/>
+                <field name="competency_count"/>
+                <field name="active" widget="boolean_toggle"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_cneb_area_form" model="ir.ui.view">
+        <field name="name">cneb.area.form</field>
+        <field name="model">cneb.area</field>
+        <field name="arch" type="xml">
+            <form string="Área curricular CNEB">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="code"/>
+                            <field name="siagie_abbr"/>
+                        </group>
+                        <group>
+                            <field name="level"/>
+                            <field name="course_id"/>
+                            <field name="grading_type"/>
+                            <field name="active"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Competencias">
+                            <field name="competency_ids">
+                                <tree editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="name"/>
+                                    <field name="code"/>
+                                    <field name="active"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_cneb_area_search" model="ir.ui.view">
+        <field name="name">cneb.area.search</field>
+        <field name="model">cneb.area</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="siagie_abbr"/>
+                <field name="code"/>
+                <filter name="inicial" string="Inicial" domain="[('level','=','inicial')]"/>
+                <filter name="primaria" string="Primaria" domain="[('level','=','primaria')]"/>
+                <filter name="secundaria" string="Secundaria" domain="[('level','=','secundaria')]"/>
+                <group expand="0" string="Agrupar por">
+                    <filter name="group_level" string="Nivel" context="{'group_by':'level'}"/>
+                    <filter name="group_grading" string="Tipo de calificación" context="{'group_by':'grading_type'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_cneb_area" model="ir.actions.act_window">
+        <field name="name">Áreas curriculares</field>
+        <field name="res_model">cneb.area</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_cneb_area_search"/>
+    </record>
+
+</odoo>
