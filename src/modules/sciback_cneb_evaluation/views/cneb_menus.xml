@@ -30,6 +30,18 @@
               action="action_cneb_area_final_grade"
               sequence="30"/>
 
+    <menuitem id="menu_cneb_bulk_grade"
+              name="Carga masiva de calificativos"
+              parent="menu_cneb_evaluation"
+              action="action_cneb_bulk_grade_wizard"
+              sequence="40"/>
+
+    <menuitem id="menu_cneb_boletin"
+              name="Boletín de notas"
+              parent="menu_cneb_evaluation"
+              action="action_cneb_report_boletin_wizard"
+              sequence="50"/>
+
     <!-- Configuración -->
     <menuitem id="menu_cneb_config"
               name="Configuración"

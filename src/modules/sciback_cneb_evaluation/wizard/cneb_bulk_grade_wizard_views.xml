@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_cneb_bulk_grade_wizard_form" model="ir.ui.view">
+        <field name="name">cneb.bulk.grade.wizard.form</field>
+        <field name="model">cneb.bulk.grade.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Carga masiva de calificativos">
+                <sheet>
+                    <div class="oe_title">
+                        <h1>Calificar sección completa</h1>
+                        <p class="text-muted">
+                            Selecciona periodo, sección y área; carga los estudiantes
+                            matriculados y registra sus calificativos de una sola vez.
+                        </p>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="period_id"/>
+                            <field name="batch_id"/>
+                        </group>
+                        <group>
+                            <field name="area_id"/>
+                            <field name="grading_type"/>
+                            <field name="level" invisible="1"/>
+                            <field name="academic_year_id"/>
+                        </group>
+                    </group>
+                    <div>
+                        <button name="action_load_students" type="object"
+                                string="Cargar estudiantes" class="btn-secondary"/>
+                    </div>
+                    <field name="line_ids" nolabel="1">
+                        <list editable="bottom" create="false" delete="false">
+                            <field name="grading_type" column_invisible="1"/>
+                            <field name="student_name" string="Estudiante" readonly="1"/>
+                            <field name="grade"
+                                   column_invisible="parent.grading_type == 'vigesimal'"/>
+                            <field name="grade_numeric"
+                                   column_invisible="parent.grading_type != 'vigesimal'"/>
+                            <field name="descriptive_conclusion"/>
+                        </list>
+                    </field>
+                </sheet>
+                <footer>
+                    <button name="action_save_grades" type="object"
+                            string="Guardar calificativos" class="btn-primary"/>
+                    <button string="Cancelar" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_cneb_bulk_grade_wizard" model="ir.actions.act_window">
+        <field name="name">Carga masiva de calificativos</field>
+        <field name="res_model">cneb.bulk.grade.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

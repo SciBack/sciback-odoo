@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Formato de página A4 dedicado al boletín -->
+    <record id="paperformat_cneb_boletin" model="report.paperformat">
+        <field name="name">Boletín CNEB A4</field>
+        <field name="default" eval="False"/>
+        <field name="format">A4</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">12</field>
+        <field name="margin_bottom">12</field>
+        <field name="margin_left">12</field>
+        <field name="margin_right">12</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">0</field>
+        <field name="dpi">110</field>
+    </record>
+
+    <!-- Acción de reporte (PDF) -->
+    <record id="action_report_cneb_boletin" model="ir.actions.report">
+        <field name="name">Boletín de Notas CNEB</field>
+        <field name="model">op.student</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">sciback_cneb_evaluation.report_cneb_boletin_document</field>
+        <field name="report_file">sciback_cneb_evaluation.report_cneb_boletin_document</field>
+        <field name="paperformat_id" ref="paperformat_cneb_boletin"/>
+        <field name="print_report_name">'Boletin - %s' % (object.name or '')</field>
+    </record>
+
+    <!-- ============================ ESTILOS ============================ -->
+    <template id="cneb_boletin_styles">
+        <style>
+            .cneb-boletin {
+                font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+                color: #1a1a1a;
+                font-size: 10.5px;
+                line-height: 1.45;
+                -webkit-font-smoothing: antialiased;
+            }
+            .cneb-boletin .cneb-page { padding: 4px 2px 0 2px; }
+
+            /* Encabezado institucional */
+            .cneb-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-start;
+                border-bottom: 2px solid #1a1a1a;
+                padding-bottom: 10px;
+                margin-bottom: 16px;
+            }
+            .cneb-header .cneb-school-name {
+                font-size: 16px;
+                font-weight: 700;
+                letter-spacing: -0.2px;
+                margin: 0;
+            }
+            .cneb-header .cneb-school-meta {
+                font-size: 9px;
+                color: #6b6b6b;
+                margin-top: 2px;
+            }
+            .cneb-header .cneb-doc-title {
+                text-align: right;
+                font-size: 11px;
+                font-weight: 600;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                color: #444;
+            }
+            .cneb-header .cneb-doc-sub {
+                text-align: right;
+                font-size: 9px;
+                color: #6b6b6b;
+                margin-top: 2px;
+            }
+
+            /* Ficha del estudiante */
+            .cneb-student {
+                background: #f6f7f9;
+                border: 1px solid #e4e7ec;
+                border-radius: 6px;
+                padding: 12px 14px;
+                margin-bottom: 18px;
+            }
+            .cneb-student .cneb-student-name {
+                font-size: 13px;
+                font-weight: 700;
+                margin: 0 0 6px 0;
+                letter-spacing: -0.2px;
+            }
+            .cneb-student-grid {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 6px 28px;
+            }
+            .cneb-student-grid .cneb-field { font-size: 9.5px; }
+            .cneb-student-grid .cneb-label {
+                color: #8a8f98;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+                font-size: 8px;
+                display: block;
+            }
+            .cneb-student-grid .cneb-value { font-weight: 600; color: #1a1a1a; }
+
+            /* Tabla de áreas */
+            table.cneb-grades {
+                width: 100%;
+                border-collapse: collapse;
+                margin-bottom: 18px;
+            }
+            table.cneb-grades thead th {
+                font-size: 8.5px;
+                text-transform: uppercase;
+                letter-spacing: 0.6px;
+                color: #6b6b6b;
+                text-align: left;
+                font-weight: 600;
+                padding: 7px 8px;
+                border-bottom: 1.5px solid #1a1a1a;
+            }
+            table.cneb-grades thead th.cneb-num { text-align: center; }
+            table.cneb-grades tbody td {
+                padding: 9px 8px;
+                border-bottom: 1px solid #ececec;
+                vertical-align: top;
+            }
+            table.cneb-grades tbody tr:nth-child(even) td { background: #fafbfc; }
+            .cneb-area-name { font-weight: 600; font-size: 10.5px; }
+            .cneb-grade-cell {
+                text-align: center;
+                font-weight: 700;
+                font-size: 12px;
+            }
+            .cneb-conclusion {
+                color: #444;
+                font-size: 9.5px;
+                line-height: 1.4;
+            }
+            .cneb-grade-AD { color: #0a7d2c; }
+            .cneb-grade-A  { color: #1565c0; }
+            .cneb-grade-B  { color: #b26a00; }
+            .cneb-grade-C  { color: #b3261e; }
+            .cneb-empty { color: #b0b4ba; }
+
+            /* Leyenda de escala */
+            .cneb-legend {
+                border-top: 1px solid #e4e7ec;
+                padding-top: 10px;
+                font-size: 8.5px;
+                color: #6b6b6b;
+            }
+            .cneb-legend .cneb-legend-title {
+                text-transform: uppercase;
+                letter-spacing: 0.6px;
+                font-weight: 600;
+                color: #444;
+                margin-bottom: 4px;
+            }
+            .cneb-legend-items { display: flex; flex-wrap: wrap; gap: 4px 18px; }
+            .cneb-legend-items .cneb-chip { font-weight: 700; margin-right: 4px; }
+
+            /* Firmas */
+            .cneb-signatures {
+                display: flex;
+                justify-content: space-around;
+                margin-top: 42px;
+            }
+            .cneb-signatures .cneb-sign {
+                text-align: center;
+                width: 40%;
+                font-size: 9px;
+                color: #6b6b6b;
+            }
+            .cneb-signatures .cneb-sign-line {
+                border-top: 1px solid #1a1a1a;
+                margin-bottom: 4px;
+            }
+        </style>
+    </template>
+
+    <!-- ====================== CONTENIDO POR ESTUDIANTE ====================== -->
+    <template id="report_cneb_boletin_document">
+        <t t-call="web.html_container">
+            <t t-call="sciback_cneb_evaluation.cneb_boletin_styles"/>
+            <t t-foreach="docs" t-as="doc">
+                <div class="article cneb-boletin" t-att-data-oe-model="'op.student'"
+                     t-att-data-oe-id="doc['student'].id">
+                    <div class="cneb-page">
+
+                        <!-- Encabezado institucional -->
+                        <div class="cneb-header">
+                            <div>
+                                <h1 class="cneb-school-name"><t t-esc="school['name']"/></h1>
+                                <div class="cneb-school-meta">
+                                    <t t-if="school.get('code')">Código modular: <t t-esc="school['code']"/></t>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="cneb-doc-title">Boletín de Notas</div>
+                                <div class="cneb-doc-sub">
+                                    Currículo Nacional de Educación Básica
+                                </div>
+                                <div class="cneb-doc-sub">
+                                    <t t-if="academic_year">Año <t t-esc="academic_year.name"/></t>
+                                    <t t-if="scope == 'period' and single_period"> · <t t-esc="single_period.name"/></t>
+                                    <t t-if="scope == 'year'"> · Consolidado anual</t>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Ficha del estudiante -->
+                        <div class="cneb-student">
+                            <p class="cneb-student-name"><t t-esc="doc['full_name']"/></p>
+                            <div class="cneb-student-grid">
+                                <div class="cneb-field">
+                                    <span class="cneb-label">Código del estudiante</span>
+                                    <span class="cneb-value">
+                                        <t t-esc="doc['student_code'] or '—'"/>
+                                    </span>
+                                </div>
+                                <div class="cneb-field">
+                                    <span class="cneb-label">Grado / Sección</span>
+                                    <span class="cneb-value">
+                                        <t t-esc="doc['batch'].name if doc['batch'] else '—'"/>
+                                    </span>
+                                </div>
+                                <div class="cneb-field">
+                                    <span class="cneb-label">Nivel</span>
+                                    <span class="cneb-value">
+                                        <t t-if="doc['batch'] and doc['batch'].course_id">
+                                            <t t-esc="doc['batch'].course_id.name"/>
+                                        </t>
+                                        <t t-else="">—</t>
+                                    </span>
+                                </div>
+                                <div class="cneb-field">
+                                    <span class="cneb-label">Año académico</span>
+                                    <span class="cneb-value">
+                                        <t t-esc="academic_year.name if academic_year else '—'"/>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Tabla de áreas curriculares -->
+                        <table class="cneb-grades">
+                            <thead>
+                                <tr>
+                                    <th style="width: 26%;">Área curricular</th>
+                                    <t t-if="scope == 'period'">
+                                        <th class="cneb-num" style="width: 12%;">Calificativo</th>
+                                        <th style="width: 62%;">Conclusión descriptiva</th>
+                                    </t>
+                                    <t t-else="">
+                                        <t t-foreach="periods" t-as="p">
+                                            <th class="cneb-num"><t t-esc="p.name"/></th>
+                                        </t>
+                                        <th>Conclusión descriptiva</th>
+                                    </t>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-if="not doc['rows']">
+                                    <tr>
+                                        <td colspan="3" class="cneb-empty"
+                                            style="text-align:center; padding: 18px;">
+                                            Sin calificativos registrados para el periodo seleccionado.
+                                        </td>
+                                    </tr>
+                                </t>
+                                <t t-foreach="doc['rows']" t-as="row">
+                                    <tr>
+                                        <td class="cneb-area-name"><t t-esc="row['area'].name"/></td>
+                                        <t t-if="scope == 'period'">
+                                            <td class="cneb-grade-cell">
+                                                <t t-if="row['area'].level == 'inicial'">
+                                                    <span class="cneb-empty">—</span>
+                                                </t>
+                                                <t t-else="">
+                                                    <t t-set="val" t-value="list(row['per_period'].values())[0] if row['per_period'] else '-'"/>
+                                                    <span t-attf-class="cneb-grade-{{val if row['is_literal'] else ''}}">
+                                                        <t t-esc="val"/>
+                                                    </span>
+                                                </t>
+                                            </td>
+                                            <td class="cneb-conclusion">
+                                                <t t-esc="row['conclusion'] or ''"/>
+                                            </td>
+                                        </t>
+                                        <t t-else="">
+                                            <t t-foreach="periods" t-as="p">
+                                                <td class="cneb-grade-cell">
+                                                    <t t-if="row['area'].level == 'inicial'">
+                                                        <span class="cneb-empty">—</span>
+                                                    </t>
+                                                    <t t-else="">
+                                                        <t t-set="pv" t-value="row['per_period'].get(p.id, '-')"/>
+                                                        <span t-attf-class="cneb-grade-{{pv if row['is_literal'] else ''}}">
+                                                            <t t-esc="pv"/>
+                                                        </span>
+                                                    </t>
+                                                </td>
+                                            </t>
+                                            <td class="cneb-conclusion">
+                                                <t t-esc="row['conclusion'] or ''"/>
+                                            </td>
+                                        </t>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+
+                        <!-- Leyenda escala CNEB -->
+                        <div class="cneb-legend">
+                            <div class="cneb-legend-title">Escala de calificación CNEB</div>
+                            <div class="cneb-legend-items">
+                                <t t-foreach="scale_legend" t-as="sc">
+                                    <div>
+                                        <span t-attf-class="cneb-chip cneb-grade-{{sc[0]}}"><t t-esc="sc[0]"/></span>
+                                        <span><t t-esc="sc[1]"/></span>
+                                    </div>
+                                </t>
+                            </div>
+                        </div>
+
+                        <!-- Firmas -->
+                        <div class="cneb-signatures">
+                            <div class="cneb-sign">
+                                <div class="cneb-sign-line"></div>
+                                <t t-if="school.get('director')"><t t-esc="school['director']"/><br/></t>
+                                Director(a)
+                            </div>
+                            <div class="cneb-sign">
+                                <div class="cneb-sign-line"></div>
+                                Tutor(a) de aula
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

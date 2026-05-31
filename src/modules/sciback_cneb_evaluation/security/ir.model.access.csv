@@ -5,3 +5,6 @@ access_cneb_evaluation_period_user,cneb.evaluation.period.user,model_cneb_evalua
 access_cneb_competency_grade_user,cneb.competency.grade.user,model_cneb_competency_grade,base.group_user,1,1,1,1
 access_cneb_area_grade_user,cneb.area.grade.user,model_cneb_area_grade,base.group_user,1,1,1,1
 access_cneb_area_final_grade_user,cneb.area.final.grade.user,model_cneb_area_final_grade,base.group_user,1,1,1,1
+access_cneb_bulk_grade_wizard_user,cneb.bulk.grade.wizard.user,model_cneb_bulk_grade_wizard,base.group_user,1,1,1,1
+access_cneb_bulk_grade_line_user,cneb.bulk.grade.line.user,model_cneb_bulk_grade_line,base.group_user,1,1,1,1
+access_cneb_report_boletin_wizard_user,cneb.report.boletin.wizard.user,model_cneb_report_boletin_wizard,base.group_user,1,1,1,1
