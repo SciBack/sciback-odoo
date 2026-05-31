@@ -28,7 +28,7 @@ no de las primeras. El cliente se conecta cuando el canónico ya está sólido.
 | **Multi-tenant** (dbfilter + nginx pod) | ✅ Lab; `deploy/` reorientado | Falta IaC real (Terraform/Ansible pod) |
 | `sciback_school_base` (niveles/grados EBR) | ✅ Hecho | core común |
 | `sciback_sunat_nubefact` (Fase 2) | ✅ Hecho | boletas sandbox OK |
-| `sciback_cneb_evaluation` (Fase 4) | 🔄 En curso | 6 modelos instalables; falta boletín PDF + wizard masivo |
+| `sciback_cneb_evaluation` (Fase 4) | ✅ Cerrada | 6 modelos + boletín PDF (QWeb A4) + wizard de carga masiva; verificado en lab |
 | Investigación + agente SIAGIE | ✅ Hecho | `siagie-expert`, docs/11, manuales archivados |
 | `sciback_siagie_connector` (Fase 3) | ⏳ En pausa | falta plantilla `.xls` real del piloto |
 | `sciback_school_finance` (pensiones) | ⬜ Vacío | transversal |
@@ -39,8 +39,9 @@ no de las primeras. El cliente se conecta cuando el canónico ya está sólido.
 
 ### Orden recomendado de aquí en adelante (por dependencia, sin cliente)
 
-1. **Terminar CNEB (Fase 4)** — boletín PDF (es el hito) + wizard de carga masiva por sección.
-2. **`sciback_school_finance` (Fase 5a)** — pensiones/cuotas/estado de cuenta; conecta matrícula↔NubeFact (ya funciona).
+1. ~~Terminar CNEB (Fase 4)~~ ✅ **HECHO** (boletín PDF + wizard carga masiva, 2026-05-31).
+2. **`sciback_school_finance` (Fase 5a)** — pensiones/cuotas/estado de cuenta; conecta matrícula↔NubeFact (ya funciona). ← SIGUIENTE
+3. *(antes 2)* `sciback_payment_culqi` (Fase 5b) — cobro online en sandbox.
 3. **`sciback_payment_culqi` (Fase 5b)** — cobro online en sandbox.
 4. **`sciback_school_portal` (Fase 6)** — portal de padres (requiere finance + cneb).
 5. **Cuando llegue el piloto:** Fase 1 (carga de datos reales), Fase 3 (conector SIAGIE con plantilla real), Fase 7 (QA), Fase 8 (go-live).
