@@ -1,12 +1,56 @@
 # Capítulo 02 — Roadmap de Implementación
 
-> Inicio: 2026-05-28  
-> Go-live objetivo: octubre 2026 (antes del 4to bimestre)  
+> Inicio: 2026-05-28
+> Go-live objetivo: octubre 2026 (antes del 4to bimestre)
 > Contexto: calendario escolar peruano termina en diciembre — go-live en octubre permite usar el sistema para notas del 4to bimestre y matrículas 2027
+> **Revisado 2026-05-31** — replanteado por dependencia (canónico primero), tras descartar Agua Viva como piloto.
 
 ---
 
-## Vista general
+## 0. Estado real y cambio de enfoque (2026-05-31)
+
+El plan original (sección "Fases detalladas" más abajo) asumía un orden lineal **atado a Agua Viva
+como piloto**. Dos hechos lo cambiaron:
+
+1. **Agua Viva descartado como piloto.** Nuevo colegio por definir (datos ~2026-06-01/02).
+2. **Hallazgos que reordenan prioridades:** el multi-tenant no estaba implementado (crítico para
+   rentabilidad de colegios pequeños) y SIAGIE no tiene API (solo Excel v3).
+
+**Nuevo principio rector:** mientras no haya cliente piloto fijo, se construye **producto canónico
+primero** (no depende de datos de cliente). La "Fase 1 — datos reales" pasa a ser de las ÚLTIMAS,
+no de las primeras. El cliente se conecta cuando el canónico ya está sólido.
+
+### Tablero de estado (fuente de verdad del avance)
+
+| Área / módulo | Estado | Nota |
+|---|---|---|
+| Entorno lab (Docker/OrbStack) | ✅ Hecho | Odoo 17 + PG + Redis + Nginx |
+| **Multi-tenant** (dbfilter + nginx pod) | ✅ Lab; `deploy/` reorientado | Falta IaC real (Terraform/Ansible pod) |
+| `sciback_school_base` (niveles/grados EBR) | ✅ Hecho | core común |
+| `sciback_sunat_nubefact` (Fase 2) | ✅ Hecho | boletas sandbox OK |
+| `sciback_cneb_evaluation` (Fase 4) | 🔄 En curso | 6 modelos instalables; falta boletín PDF + wizard masivo |
+| Investigación + agente SIAGIE | ✅ Hecho | `siagie-expert`, docs/11, manuales archivados |
+| `sciback_siagie_connector` (Fase 3) | ⏳ En pausa | falta plantilla `.xls` real del piloto |
+| `sciback_school_finance` (pensiones) | ⬜ Vacío | transversal |
+| `sciback_payment_*` (Culqi/Yape/PE) | ⬜ Vacío | sandbox no requiere cliente |
+| `sciback_school_portal` (padres) | ⬜ Vacío | depende de finance + cneb |
+| `sciback_ley29733_compliance` | ⬜ Vacío | datos de menores |
+| Pricing / costos (negocio) | ✅ Hecho | 4 planes + Nano S/149 |
+
+### Orden recomendado de aquí en adelante (por dependencia, sin cliente)
+
+1. **Terminar CNEB (Fase 4)** — boletín PDF (es el hito) + wizard de carga masiva por sección.
+2. **`sciback_school_finance` (Fase 5a)** — pensiones/cuotas/estado de cuenta; conecta matrícula↔NubeFact (ya funciona).
+3. **`sciback_payment_culqi` (Fase 5b)** — cobro online en sandbox.
+4. **`sciback_school_portal` (Fase 6)** — portal de padres (requiere finance + cneb).
+5. **Cuando llegue el piloto:** Fase 1 (carga de datos reales), Fase 3 (conector SIAGIE con plantilla real), Fase 7 (QA), Fase 8 (go-live).
+
+> Las "Fases detalladas" siguientes conservan el alcance original de cada fase (sigue siendo
+> válido como especificación); lo que cambió es el ORDEN y la dependencia del cliente, resumidos arriba.
+
+---
+
+## Vista general (plan original — referencia de alcance)
 
 ```
 May 28        Jun 11        Jul 2         Jul 23        Aug 6
