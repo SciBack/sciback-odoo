@@ -171,4 +171,21 @@ Pregunta: ¿se puede integrar Odoo↔SIAGIE por API en vez de Excel?
 
 **Estado de decisión:** el usuario NO está convencido del enfoque Excel (2026-05-28) y va a investigar por su cuenta vías alternativas antes de construir. Conector EN PAUSA hasta nueva información.
 
+---
+
+## ACTUALIZACIÓN 2026-05-31 — confirmaciones que cierran el debate
+
+Tras la investigación del usuario (NotebookLM + 2 informes de consultor, archivados en `docs/siagie-fuentes/`):
+
+1. **NO existe API/REST/JSON/token. Confirmado por triple fuente independiente.** La "vía API+token" queda descartada definitivamente. La integración con un ERP es **solo** vía plantillas Excel `.xls` (flujo asíncrono "fill template").
+2. **Arquitectura híbrida v3 + v5** (corrige el supuesto previo de v5 como núcleo):
+   - **v5** (`siagie.minedu.gob.pe`): config año, grados/secciones, **matrícula**, **asistencia**.
+   - **v3** (`sistemas10.minedu.gob.pe/siagie3/`): **NOTAS, actas, traslados, certificados**. El conector se alinea con **v3**. Comparten BD; matrícula sincroniza v5→v3 antes de registrar notas.
+3. **5 reglas de archivo (o SIAGIE rechaza):** nombre inmutable (codifica modular+sección+hash), hoja **"Generalidades" intocable**, **UTF-8** (ñ/tildes), formato **.xls 97-2003**, cerrar antes de subir.
+4. **Plantillas:** `RegNotas_/RegNotasFinales_` (pestaña por área: CCAA, MATE, COMU_LM; hoja "NF"), `AsistenciaIE_` (leyenda F/T/J/U), `Mats_` (matrícula masiva).
+
+**Recurso creado:** agente **`siagie-expert`** (en `~/.claude/agents/`) que encapsula todo este dominio y trabaja en tándem con `odoo-expert`. Memoria: `sciback-odoo-siagie`.
+
+**Sigue pendiente:** plantilla REAL descargada del SIAGIE v3 de Agua Viva (notas "NF" + asistencia) antes de codear el parser.
+
 Fuentes: gob.pe/741-plataforma-de-interoperabilidad-del-estado · busquedas.elperuano.pe (DS 029-2021-PCM) · siagie.minedu.gob.pe/baselegal · passport.minedu.gob.pe · sieweb.com.pe · smiledu.com · sigedu.pe
