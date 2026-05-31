@@ -188,4 +188,12 @@ Tras la investigación del usuario (NotebookLM + 2 informes de consultor, archiv
 
 **Sigue pendiente:** plantilla REAL descargada del SIAGIE v3 de Agua Viva (notas "NF" + asistencia) antes de codear el parser.
 
+### Manuales oficiales archivados (2026-05-31)
+En `docs/siagie-fuentes/` quedan los 3 PDFs oficiales del MINEDU (procedimientos paso a paso verificados):
+- `manual-registro-notas-finales.pdf` — estructura EXACTA del nombre de archivo (`RegNotasFinales_…`, posición por posición), hojas "Generalidades"/"NF", abreviaturas de área (CCAA, COMU_LM, COMU_SL, MATE, PPSS…), flujo Examinar→Cargar notas→Grabar.
+- `guia-rapida-v3.4.0.pdf` — "Periodo por excel" (Generar Excel → Cargar notas), cierre/reapertura de periodos, estados "Sin evaluación/En evaluación".
+- `guia-actualizacion-v3.3.0.pdf` — asistencia mensual (`AsistencialE_…`, leyenda F/T/J/U), matrícula masiva (`Mats_…`), listado de procesos por usuario (verde/rojo).
+
+Todo este detalle quedó incorporado al agente `siagie-expert` (§3.7–3.12).
+
 Fuentes: gob.pe/741-plataforma-de-interoperabilidad-del-estado · busquedas.elperuano.pe (DS 029-2021-PCM) · siagie.minedu.gob.pe/baselegal · passport.minedu.gob.pe · sieweb.com.pe · smiledu.com · sigedu.pe
