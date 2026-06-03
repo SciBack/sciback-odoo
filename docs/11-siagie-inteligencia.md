@@ -173,6 +173,127 @@ Pregunta: ¿se puede integrar Odoo↔SIAGIE por API en vez de Excel?
 
 ---
 
+## ACTUALIZACIÓN 2026-06-03 — Manuales oficiales MINEDU (4 PDFs nuevos)
+
+> Fuentes: `docs/siagie-fuentes/` — 4 manuales oficiales MINEDU leídos completos.
+
+### IDs numéricos de áreas curriculares SIAGIE (verificados en plantilla real)
+
+Extraídos del manual de Rectificación de Actas (Secundaria, hoja de calificativos):
+
+| ID | Área curricular | Nivel |
+|----|-----------------|-------|
+| 002 | ARTE | Secundaria |
+| 011 | CIENCIA, TECNOLOGÍA Y AMBIENTE | Secundaria |
+| 016 | COMPORTAMIENTO | Secundaria |
+| 017 | COMUNICACIÓN | Secundaria |
+| 031 | EDUCACIÓN FÍSICA | Secundaria |
+| 032 | EDUCACIÓN PARA EL TRABAJO | Secundaria |
+| 035 | EDUCACIÓN RELIGIOSA | Secundaria |
+| 042 | FORMACIÓN CIUDADANA Y CÍVICA | Secundaria |
+| 057 | INGLÉS | Secundaria |
+| 062 | HISTORIA, GEOGRAFÍA Y ECONOMÍA | Secundaria |
+| 063 | MATEMÁTICA | Secundaria |
+| 066 | PERSONA, FAMILIA Y RELACIONES HUMANAS | Secundaria |
+
+> Estos IDs son los que aparecen en la columna `id_area` de la plantilla Excel de calificativos. Son **numéricos**, no las abreviaturas textuales como `MATE` o `COMU_LM`.
+
+---
+
+### Gestión de Traslados — 6 tipos y reglas críticas
+
+**Normativa base:** RM N° 0516-2007-ED (traslados) + RM 193-2020-MINEDU art.17 (Resolución Directoral obligatoria para IEs públicas post-traslado).
+
+#### Los 6 tipos de traslado en SIAGIE
+
+| # | Tipo | Descripción |
+|---|------|-------------|
+| 1 | Por cambio de año/nivel | Entre IEs diferentes, año distinto (antes de inicio del nuevo año) |
+| 2 | En el mismo año | Entre IEs diferentes, durante el año escolar en curso |
+| 3 | En el mismo año / retorno | IE A → IE B → regresa a IE A en el mismo año |
+| 4 | En el mismo año (Nov-Dic) | Traslado en período noviembre-diciembre con reglas especiales de fecha |
+| 5 | Matrícula de estudiantes por cambio de nivel de la misma IE | Si Inicial+Primaria+Secundaria conviven en mismo local escolar: **NO se hace gestión de traslados** — matrícula directa con DNI |
+| 6 | — | (implícito en tipo 4, variante) |
+
+#### Regla de las 72 horas ⚠️
+El traslado **se ejecuta de forma efectiva 72 horas** después del registro en SIAGIE. Durante ese período se puede anular. Pasadas las 72h:
+- La IE destino puede matricular al estudiante.
+- La IE origen recibe notificación automática en su área de trabajo.
+
+#### Datos requeridos para registrar un traslado
+```
+- Tipo de traslado
+- Código modular de IE Origen
+- Tipo de documento del estudiante (DNI / carné extranjería / etc.)
+- Número de documento del estudiante
+- Último año de estudios
+- Último grado de estudios
+- Apoderado (buscado por DNI)
+- Grado a trasladar (lo propone el sistema)
+- Fecha de traslado
+- Número resolución de autorización de la IE Origen
+```
+
+#### Declaración jurada obligatoria (IE destino declara haber recibido)
+- [ ] Copia de DNI
+- [ ] Ficha Única de Matrícula
+- [ ] Certificado de Estudios
+
+#### Estados del traslado
+`Registrado` → `Aprobado` → `Matriculado` | `Anulado` | `Rechazado`
+
+Dos modalidades de gestión: **Manual** (director IE destino inicia) vs **Automática** (sistema propone).
+
+#### Ruta en SIAGIE
+`Matrícula → Gestión de traslados → Ingreso` (IE destino inicia)
+`Matrícula → Gestión de traslados → Salida` (IE origen aprueba/rechaza)
+
+---
+
+### Rectificación de Actas de Evaluación — 9 tipos
+
+Ruta de acceso: `Evaluación → Acta consolidada de Evaluación → Rectificación de Acta`.
+
+**Flujo de autorización (siempre requiere UGEL):**
+1. Director IE solicita rectificación al Especialista de Nivel Educativo (UGEL) con documento sustentatorio.
+2. Especialista UGEL autoriza o rechaza → emite documento de referencia (Oficio UGEL).
+3. Director IE registra solicitud en SIAGIE adjuntando el Oficio UGEL como referencia.
+4. Especialista SIAGIE UGEL verifica y aprueba/rechaza la solicitud.
+5. Si aceptada, Director IE actualiza datos, genera y aprueba nueva acta.
+
+**Estados de solicitud de rectificación:**
+`Registrado` → `Remitida` → `Aceptada` → `Concluida` | `Rechazada`
+
+#### Los 9 motivos de rectificación
+
+| # | Motivo | Notas |
+|---|--------|-------|
+| I | Actualizar fecha de emisión | Cambia fecha del acta; puede afectar Fase Recuperación |
+| II | Rectificación de periodo lectivo | Cambia fechas de inicio/fin del periodo lectivo en el acta |
+| III | Actualizar calificativos de estudiantes | **Excel bidireccional** (ver abajo); para IEs con Notas Finales: edición directa en app (sin Excel) |
+| IV | Actualizar nombre del Director | Requiere que UGEL asigne usuario SIAGIE al nuevo Director |
+| V | Actualizar nombre del Profesor responsable del área | Selecciona nuevo profesor por área/sección |
+| VI | Rectificar calificativo de área a cargo | **Solo Nivel Secundaria** — para estudiantes con área a cargo (libre) |
+| VII | Regularizar traslado de estudiantes | Regularizar traslados mal registrados |
+| VIII | Eliminar retiro de estudiantes | Reincorporar estudiante que se había marcado como retirado |
+| IX | Otros | Casos especiales |
+
+#### Mecanismo Excel para motivo III (Actualizar calificativos)
+1. **Descargar** plantilla desde botón "Descargar" (seleccionar periodo y sección).
+2. **Editar** el archivo `.xls` en la computadora — actualizar los calificativos de los estudiantes.
+3. **Cargar** el archivo editado con "Seleccionar Archivo" + "Cargar notas".
+4. **Procesar** con "Procesar Calificativos" (calcula nota final/promedio anual).
+5. **Generar y aprobar** el acta de evaluación.
+
+> ⚠️ El mismo mecanismo Excel de "descargar→editar→cargar" aplica para notas regulares Y para rectificaciones. Confirma que el diseño "fill template" del conector es correcto para ambos casos.
+
+#### Advertencia crítica del sistema (aparece en todas las rectificaciones)
+> "La actualización de calificativos de los estudiantes en la Fase Regular podría implicar cambios en la Fase de Recuperación; al es el caso, debe verificar que los calificativos y el estado de las autorizaciones de evaluación a una IE externa de la Fase de Recuperación guarden consistencia."
+
+Esto implica que el módulo `sciback_cneb_evaluation` debe incluir validación de consistencia entre Fase Regular y Fase Recuperación antes de generar plantillas de rectificación.
+
+---
+
 ## ACTUALIZACIÓN 2026-05-31 — confirmaciones que cierran el debate
 
 Tras la investigación del usuario (NotebookLM + 2 informes de consultor, archivados en `docs/siagie-fuentes/`):
